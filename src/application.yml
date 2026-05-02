@@ -1,0 +1,26 @@
+server:
+  port: 8081
+  address: 0.0.0.0  # ✅ Доступ извне
+
+spring:
+  datasource:
+    url: jdbc:h2:file:./data/physmath_db  # ✅ Путь к БД
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update  # ✅ АВТО-СОЗДАНИЕ ТАБЛИЦ (критично!)
+    show-sql: true      # ✅ Логируйте SQL для отладки
+    properties:
+      hibernate:
+        format_sql: true
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true  # ✅ Доступ к консоли из сети

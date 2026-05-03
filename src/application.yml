@@ -24,3 +24,8 @@ spring:
       path: /h2-console
       settings:
         web-allow-others: true  # ✅ Доступ к консоли из сети
+gigachat:
+  auth-url: https://ngw.devices.sberbank.ru:9443/api/v2/oauth
+  api-url: https://gigachat.devices.sberbank.ru/api/v1/chat/completions
+  client-id: ${GIGACHAT_CLIENT_ID:a7449a49-f68b-4b03-ab7f-1b070d124d35}
+  client-secret: ${GIGACHAT_CLIENT_SECRET:YTc0NDlhNDktZjY4Yi00YjAzLWFiN2YtMWIwNzBkMTI0ZDM1OjZkNGVlN2RlLTk1NTktNGQ3My1iOWNlLWM1OTNlNTFlN2I4Ng==}

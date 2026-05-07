@@ -14,13 +14,12 @@ public class SslConfig {
 
     public static SslContext createSslContextWithCustomCert() {
         try {
-            // Загружаем сертификат из ресурсов
             InputStream certStream = SslConfig.class
                     .getClassLoader()
                     .getResourceAsStream("certs/sberbank.cer");
 
             if (certStream == null) {
-                log.warn("⚠️ Certificate not found in resources, using default trust store");
+                log.warn("Certificate not found in resources, using default trust store");
                 return SslContextBuilder.forClient().build();
             }
 
@@ -35,14 +34,14 @@ public class SslConfig {
                     .getInstance(TrustManagerFactory.getDefaultAlgorithm());
             tmf.init(keyStore);
 
-            log.info("✅ Custom SSL context created with Sberbank certificate");
+            log.info("Custom SSL context created with Sberbank certificate");
 
             return SslContextBuilder.forClient()
                     .trustManager(tmf)
                     .build();
 
         } catch (Exception e) {
-            log.error("❌ Failed to create SSL context with custom cert", e);
+            log.error("Failed to create SSL context with custom cert", e);
             try {
                 return SslContextBuilder.forClient().build();
             } catch (Exception ex) {

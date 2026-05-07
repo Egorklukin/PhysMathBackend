@@ -17,15 +17,13 @@ public class LessonController {
     private final ObjectMapper mapper = new ObjectMapper();
     private final LessonService lessonService;
     private final QuestionRepository questionRepository;
-    private final GigaChatService gigaChatService; // ✅ Добавьте в конструктор
+    private final GigaChatService gigaChatService;
 
-    // 📥 Получить все уроки (без изменений)
     @GetMapping("/lessons")
     public ResponseEntity<List<Lesson>> getLessons() {
         return ResponseEntity.ok(lessonService.getAllLessons());
     }
 
-    // 📥 Получить урок по ID (без изменений)
     @GetMapping("/lessons/{id}")
     public ResponseEntity<Lesson> getLesson(@PathVariable String id) {
         return lessonService.getLessonById(id)
@@ -81,7 +79,7 @@ public class LessonController {
     @GetMapping("/lessons/{lessonId}/questions")
     public ResponseEntity<List<Question>> getQuestions(
             @PathVariable String lessonId,
-            @RequestParam(defaultValue = "false") boolean force) {  // ✅ Параметр в том же методе
+            @RequestParam(defaultValue = "false") boolean force) {
 
         if (!force) {
             List<Question> cachedQuestions = questionRepository.findByLessonIdOrderByOrderIndexAsc(lessonId);
@@ -114,15 +112,13 @@ public class LessonController {
         }
     }
 
-    // 🔹 Заглушка на случай сбоя ИИ
-    // ✅ Исправленный метод — без throws, с try-catch внутри
+    // заглушка
     private List<Question> getFallbackQuestions(String lessonId) {
         try {
             Question fallback = new Question();
             fallback.setId(lessonId + "_fallback_1");
             fallback.setLessonId(lessonId);
             fallback.setQuestionText("⚠️ Вопросы временно недоступны");
-            // ✅ Безопасная сериализация с try-catch
             fallback.setOptionsJson(mapper.writeValueAsString(
                     List.of("Попробовать ещё раз", "Вернуться к уроку", "Пропустить", "Сообщить об ошибке")
             ));
@@ -132,7 +128,6 @@ public class LessonController {
             fallback.setOrderIndex(1);
             return List.of(fallback);
         } catch (JsonProcessingException e) {
-            // ✅ Если даже fallback не удалось — возвращаем минимальный вопрос
             Question minimal = new Question();
             minimal.setId(lessonId + "_minimal");
             minimal.setLessonId(lessonId);

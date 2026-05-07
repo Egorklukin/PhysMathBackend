@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true)  // ✅ Игнорировать неизвестные поля
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GigaChatResponse {
     private List<Choice> choices;
     private String created;

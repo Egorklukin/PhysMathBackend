@@ -15,8 +15,13 @@ public class Lesson {
     @Id
     private String id;
     private String title;
-
-    @Lob
     @Column(columnDefinition = "TEXT")
     private String contentMd;
+    private boolean isDownloaded;
+    private Long downloadedAt;
+    private String subject;
+    private String category;
+    private String difficulty;
+    private Integer estimatedMinutes;
+    private Integer orderIndex;
 }

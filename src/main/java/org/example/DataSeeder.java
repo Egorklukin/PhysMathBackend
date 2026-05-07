@@ -126,7 +126,5 @@ public class DataSeeder implements CommandLineRunner {
         advQ3.setOrderIndex(3);
 
         questionRepo.saveAll(Arrays.asList(advQ1, advQ2, advQ3));
-
-        System.out.println("✅ Добавлено " + lessonRepo.count() + " уроков и " + questionRepo.count() + " вопросов!");
     }
 }

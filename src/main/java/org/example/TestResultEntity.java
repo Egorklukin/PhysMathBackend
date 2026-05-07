@@ -16,7 +16,7 @@ public class TestResultEntity {
     private String id;
 
     private String lessonId;
-    private String userId; // Для будущей авторизации
+    private String userId;
     private Integer score;
     private Integer totalQuestions;
 

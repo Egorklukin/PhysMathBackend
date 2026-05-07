@@ -53,10 +53,10 @@ public class GigaChatService {
                     ))
                     .build();
 
-            log.info("✅ GigaChatService initialized, authUrl={}", authUrl);
+            log.info("GigaChatService initialized, authUrl={}", authUrl);
 
         } catch (Exception e) {
-            log.error("❌ Failed to initialize GigaChatService", e);
+            log.error("Failed to initialize GigaChatService", e);
             throw new RuntimeException("SSL setup failed", e);
         }
     }
@@ -67,7 +67,7 @@ public class GigaChatService {
         }
 
         if (clientId.isEmpty() || clientSecret.isEmpty()) {
-            log.error("❌ GigaChat credentials not configured");
+            log.error("GigaChat credentials not configured");
             throw new RuntimeException("Missing GigaChat credentials");
         }
 
@@ -86,10 +86,10 @@ public class GigaChatService {
             JsonNode node = mapper.readTree(response);
             this.accessToken = node.get("access_token").asText();
             this.tokenExpiry = System.currentTimeMillis() + (node.get("expires_at").asLong() * 1000);
-            log.debug("✅ Token received, expires at: {}", tokenExpiry);
+            log.debug("Token received, expires at: {}", tokenExpiry);
             return accessToken;
         } catch (Exception e) {
-            log.error("❌ Failed to get GigaChat token", e);
+            log.error("Failed to get GigaChat token", e);
             throw new RuntimeException("Auth failed", e);
         }
     }
@@ -138,7 +138,7 @@ public class GigaChatService {
 
             if (root.has("error")) {
                 String errorMsg = root.path("error").path("message").asText("Unknown error");
-                log.error("❌ GigaChat API error: {}", errorMsg);
+                log.error("GigaChat API error: {}", errorMsg);
                 throw new RuntimeException("GigaChat API error: " + errorMsg);
             }
 
@@ -147,7 +147,7 @@ public class GigaChatService {
             String jsonText = contentRaw.replaceAll("```json\\s*|\\s*```|```\\s*|\\s*```", "").trim();
 
             if (!jsonText.startsWith("[") && !jsonText.startsWith("{")) {
-                log.warn("⚠️ GigaChat returned non-JSON: {}", jsonText.substring(0, Math.min(100, jsonText.length())));
+                log.warn("⚠GigaChat returned non-JSON: {}", jsonText.substring(0, Math.min(100, jsonText.length())));
                 throw new RuntimeException("Invalid JSON format from GigaChat");
             }
 
@@ -158,7 +158,7 @@ public class GigaChatService {
                 }
                 dtos = mapper.readValue(jsonText, QuestionDto[].class);
             } catch (JsonProcessingException e) {
-                log.error("❌ Failed to parse GigaChat JSON: {}", jsonText, e);
+                log.error("Failed to parse GigaChat JSON: {}", jsonText, e);
                 throw new RuntimeException("JSON parse failed", e);
             }
 

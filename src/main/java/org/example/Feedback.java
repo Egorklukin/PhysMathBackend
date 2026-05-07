@@ -16,16 +16,16 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    private String userName;        // Опционально: имя пользователя
-    private String userEmail;       // Опционально: для связи
-    private String requestType;     // "lesson" или "test"
-    private String topic;           // Тема: "Квантовая физика", "Интегралы" и т.д.
+    private String userName;
+    private String userEmail;
+    private String requestType;
+    private String topic;
 
     @Lob
     @Column(columnDefinition = "TEXT")
-    private String description;     // Подробное описание пожелания
+    private String description;
 
-    private String deviceInfo;      // Модель телефона, версия ОС (для аналитики)
+    private String deviceInfo;
     private LocalDateTime createdAt;
 
     @PrePersist

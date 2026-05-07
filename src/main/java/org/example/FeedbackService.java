@@ -11,7 +11,6 @@ public class FeedbackService {
     private final FeedbackRepository repository;
 
     public Feedback saveFeedback(Feedback feedback) {
-        // Простая валидация
         if (feedback.getTopic() == null || feedback.getTopic().isBlank()) {
             throw new IllegalArgumentException("Тема пожелания не может быть пустой");
         }

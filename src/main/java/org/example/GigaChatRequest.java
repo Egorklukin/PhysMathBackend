@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)  // ✅ Для безопасности
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GigaChatRequest {
     private String model;
     private List<Message> messages;

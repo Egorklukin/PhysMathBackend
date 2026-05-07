@@ -33,13 +33,11 @@ public class LessonController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // 📤 Добавить новый урок (без изменений)
     @PostMapping("/lessons")
     public ResponseEntity<Lesson> createLesson(@RequestBody Lesson lesson) {
         return ResponseEntity.ok(lessonService.saveLesson(lesson));
     }
 
-    // ✏️ Обновить урок (без изменений)
     @PutMapping("/lessons/{id}")
     public ResponseEntity<Lesson> updateLesson(
             @PathVariable String id,
@@ -71,7 +69,6 @@ public class LessonController {
             ));
         }
     }
-    // 🗑️ Удалить урок (без изменений)
     @DeleteMapping("/lessons/{id}")
     public ResponseEntity<Void> deleteLesson(@PathVariable String id) {
         if (lessonService.getLessonById(id).isPresent()) {
@@ -81,24 +78,20 @@ public class LessonController {
         return ResponseEntity.notFound().build();
     }
 
-    // ✅ ОБНОВЛЁННЫЙ МЕТОД: Вопросы с поддержкой ?force=true
     @GetMapping("/lessons/{lessonId}/questions")
     public ResponseEntity<List<Question>> getQuestions(
             @PathVariable String lessonId,
             @RequestParam(defaultValue = "false") boolean force) {  // ✅ Параметр в том же методе
 
-        // 🔹 Если force=false (по умолчанию) — проверяем кэш
         if (!force) {
             List<Question> cachedQuestions = questionRepository.findByLessonIdOrderByOrderIndexAsc(lessonId);
             if (!cachedQuestions.isEmpty()) {
                 return ResponseEntity.ok(cachedQuestions);
             }
         } else {
-            // ✅ Если force=true — удаляем старые вопросы перед генерацией
             questionRepository.deleteByLessonId(lessonId);
         }
 
-        // 🔹 Генерация через ИИ
         try {
             Lesson lesson = lessonService.getLessonById(lessonId)
                     .orElseThrow(() -> new RuntimeException("Lesson not found: " + lessonId));
@@ -109,7 +102,6 @@ public class LessonController {
                     lesson.getContentMd()
             );
 
-            // ✅ Если ИИ вернул пустой список — используем fallback
             if (generatedQuestions == null || generatedQuestions.isEmpty()) {
                 return ResponseEntity.ok(getFallbackQuestions(lessonId));
             }

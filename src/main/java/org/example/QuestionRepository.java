@@ -13,7 +13,6 @@ public interface QuestionRepository extends JpaRepository<Question, String> {
 
     List<Question> findByLessonIdOrderByOrderIndexAsc(String lessonId);
 
-    // ✅ Новый метод для удаления вопросов урока
     @Transactional
     @Modifying
     @Query("DELETE FROM Question q WHERE q.lessonId = :lessonId")

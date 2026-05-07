@@ -42,7 +42,6 @@ public class GigaChatService {
     private volatile String accessToken;
     private volatile long tokenExpiry;
 
-    // ✅ Инициализация WebClient после инъекции свойств
     @PostConstruct
     public void init() {
         try {
@@ -62,7 +61,6 @@ public class GigaChatService {
         }
     }
 
-    // 🔑 Получение токена
     private synchronized String getToken() throws Exception {
         if (accessToken != null && System.currentTimeMillis() < tokenExpiry - 60000) {
             return accessToken;
@@ -96,10 +94,8 @@ public class GigaChatService {
         }
     }
 
-    // 📝 Генерация вопросов — ИСПРАВЛЕННАЯ ВЕРСИЯ
     public List<Question> generateQuestions(String lessonId, String title, String content) {
         try {
-            // ✅ Короткий и чёткий промпт (чтобы не превысить лимит токенов)
             String systemPrompt = """
             Ты эксперт-преподаватель. Сгенерируй 5 вопросов по теме "%s".
             Материал: %s
@@ -113,7 +109,6 @@ public class GigaChatService {
 
             String token = getToken();
 
-            // ✅ Правильное формирование JSON через Jackson (автоматическое экранирование!)
             Map<String, Object> message = Map.of("role", "user", "content", systemPrompt);
             Map<String, Object> requestBody = Map.of(
                     "model", "GigaChat",
@@ -121,7 +116,6 @@ public class GigaChatService {
                     "temperature", 0.3
             );
 
-            // Jackson сам экранирует все спецсимволы в systemPrompt
             String jsonRequestBody = mapper.writeValueAsString(requestBody);
 
             String responseBody = webClient.post()
@@ -137,13 +131,11 @@ public class GigaChatService {
                 throw new RuntimeException("Empty response from GigaChat");
             }
 
-            // Логируем ответ для отладки (обрезаем до 500 символов)
             log.debug("🤖 GigaChat raw response: {}",
                     responseBody.length() > 500 ? responseBody.substring(0, 500) + "..." : responseBody);
 
             JsonNode root = mapper.readTree(responseBody);
 
-            // Проверка на наличие ошибок в ответе API
             if (root.has("error")) {
                 String errorMsg = root.path("error").path("message").asText("Unknown error");
                 log.error("❌ GigaChat API error: {}", errorMsg);
@@ -201,7 +193,6 @@ public class GigaChatService {
         }
     }
 
-    // 💡 Генерация пояснения — БЕЗОПАСНАЯ ВЕРСИЯ
     public String generateExplanation(String question, String userAnswer, String correctAnswer) {
         try {
             String prompt = """

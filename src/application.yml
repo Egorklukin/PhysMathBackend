@@ -1,6 +1,6 @@
 server:
   port: 8081
-  address: 0.0.0.0  # ✅ Доступ извне
+  address: 0.0.0.0
 
 spring:
   datasource:
@@ -12,8 +12,8 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: update  # ✅ АВТО-СОЗДАНИЕ ТАБЛИЦ (критично!)
-    show-sql: true      # ✅ Логируйте SQL для отладки
+      ddl-auto: update
+    show-sql: true
     properties:
       hibernate:
         format_sql: true
@@ -23,7 +23,7 @@ spring:
       enabled: true
       path: /h2-console
       settings:
-        web-allow-others: true  # ✅ Доступ к консоли из сети
+        web-allow-others: true
 gigachat:
   auth-url: https://ngw.devices.sberbank.ru:9443/api/v2/oauth
   api-url: https://gigachat.devices.sberbank.ru/api/v1/chat/completions

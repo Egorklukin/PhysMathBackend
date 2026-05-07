@@ -20,9 +20,8 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (lessonRepo.count() > 0) return; // Пропускаем, если данные уже есть
+        if (lessonRepo.count() > 0) return;
 
-        // 📘 Урок 1: Математика (Лёгкий → Средний)
         Lesson math1 = new Lesson();
         math1.setId("math_basics_01");
         math1.setTitle("Математика: Основы алгебры");
@@ -58,7 +57,6 @@ public class DataSeeder implements CommandLineRunner {
 
         questionRepo.saveAll(Arrays.asList(mathQ1, mathQ2, mathQ3));
 
-        // ⚛️ Урок 2: Физика (Средний → Сложный)
         Lesson phys1 = new Lesson();
         phys1.setId("physics_newton_01");
         phys1.setTitle("Физика: Законы Ньютона");
@@ -94,7 +92,6 @@ public class DataSeeder implements CommandLineRunner {
 
         questionRepo.saveAll(Arrays.asList(physQ1, physQ2, physQ3));
 
-        // 🚀 Урок 3: Продвинутый (Математика + Физика)
         Lesson adv1 = new Lesson();
         adv1.setId("math_phys_advanced_01");
         adv1.setTitle("Производные и Кинематика");

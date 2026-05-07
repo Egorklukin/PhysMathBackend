@@ -17,7 +17,7 @@ public class GigaChatResponse {
     private Usage usage;
 
     @Data
-    @JsonIgnoreProperties(ignoreUnknown = true)  // ✅ То же для вложенных классов
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Choice {
         private Message message;
         private Integer index;
@@ -25,10 +25,9 @@ public class GigaChatResponse {
     }
 
     @Data
-    @JsonIgnoreProperties(ignoreUnknown = true)  // ✅ Ключевое исправление!
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Message {
         private String content;
-        // Поле "role" будет проигнорировано автоматически
     }
 
     @Data

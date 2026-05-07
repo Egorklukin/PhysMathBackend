@@ -24,7 +24,6 @@ public class SslConfig {
                 return SslContextBuilder.forClient().build();
             }
 
-            // Создаём кастомный KeyStore с нашим сертификатом
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
             keyStore.load(null, null);
 
@@ -32,7 +31,6 @@ public class SslConfig {
             X509Certificate cert = (X509Certificate) cf.generateCertificate(certStream);
             keyStore.setCertificateEntry("sberbank-gigachat", cert);
 
-            // Создаём TrustManagerFactory с нашим хранилищем
             TrustManagerFactory tmf = TrustManagerFactory
                     .getInstance(TrustManagerFactory.getDefaultAlgorithm());
             tmf.init(keyStore);
@@ -45,7 +43,6 @@ public class SslConfig {
 
         } catch (Exception e) {
             log.error("❌ Failed to create SSL context with custom cert", e);
-            // Fallback: используем стандартный (может не работать)
             try {
                 return SslContextBuilder.forClient().build();
             } catch (Exception ex) {

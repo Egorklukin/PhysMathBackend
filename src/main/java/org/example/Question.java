@@ -13,11 +13,11 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    private String lessonId; // Связь с уроком
+    private String lessonId;
     private String questionText;
 
     @Column(columnDefinition = "TEXT")
-    private String optionsJson; // JSON-массив: ["A", "B", "C", "D"]
+    private String optionsJson;
 
     private String correctAnswer;
 
@@ -26,5 +26,5 @@ public class Question {
     private String explanation;
 
     private String difficulty; // EASY, MEDIUM, HARD
-    private int orderIndex;    // Порядок вопросов в тесте
+    private int orderIndex;
 }

@@ -42,7 +42,7 @@ public class TestResultService {
 
         double avgScore = scores.stream().mapToInt(Integer::intValue).average().orElse(0.0);
         long passCount = results.stream()
-                .filter(r -> r.getScore() >= r.getTotalQuestions() * 0.7) // 70% для зачёта
+                .filter(r -> r.getScore() >= r.getTotalQuestions() * 0.7)
                 .count();
 
         return Map.of(

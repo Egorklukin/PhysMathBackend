@@ -1,7 +1,6 @@
 package org.example;
 
 import lombok.RequiredArgsConstructor;
-import org.example.LessonRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,5 +26,8 @@ public class LessonService {
 
     public void deleteLesson(String id) {
         repository.deleteById(id);
+    }
+    public List<Lesson> getLessonsByTopic(String topicId) {
+        return repository.findByTopicIdOrderByOrderIndexAsc(topicId);
     }
 }

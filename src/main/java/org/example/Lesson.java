@@ -1,10 +1,7 @@
 package org.example;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
 
 @Entity
 @Table(name = "lessons")
@@ -15,6 +12,8 @@ public class Lesson {
     @Id
     private String id;
     private String title;
+    private String topicId;
+    private String subjectId;
     @Column(columnDefinition = "TEXT")
     private String contentMd;
     private boolean isDownloaded;

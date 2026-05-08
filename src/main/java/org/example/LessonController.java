@@ -18,7 +18,30 @@ public class LessonController {
     private final LessonService lessonService;
     private final QuestionRepository questionRepository;
     private final GigaChatService gigaChatService;
+    private final SubjectRepository subjectRepository;
+    private final TopicRepository topicRepository;
 
+    @GetMapping("/subjects")
+    public ResponseEntity<List<Subject>> getSubjects() {
+        return ResponseEntity.ok(subjectRepository.findAllByOrderByTitleAsc());
+    }
+    @GetMapping("/subjects/{subjectId}/topics")
+    public ResponseEntity<List<Topic>> getTopicsBySubject(
+            @PathVariable String subjectId,
+            @RequestParam(required = false) String search) {
+
+        List<Topic> topics;
+        if (search != null && !search.isEmpty()) {
+            topics = topicRepository.findBySubjectIdAndTitleContainingIgnoreCase(subjectId, search);
+        } else {
+            topics = topicRepository.findBySubjectIdOrderByTitleAsc(subjectId);
+        }
+        return ResponseEntity.ok(topics);
+    }
+    @GetMapping("/topics/{topicId}/lessons")
+    public ResponseEntity<List<Lesson>> getLessonsByTopic(@PathVariable String topicId) {
+        return ResponseEntity.ok(lessonService.getLessonsByTopic(topicId));
+    }
     @GetMapping("/lessons")
     public ResponseEntity<List<Lesson>> getLessons() {
         return ResponseEntity.ok(lessonService.getAllLessons());

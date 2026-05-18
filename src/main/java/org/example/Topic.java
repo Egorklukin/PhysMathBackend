@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-import java.util.List;
 
 @Entity
 @Table(name = "topics")
@@ -14,11 +13,8 @@ import java.util.List;
 public class Topic {
 
     @Id
-    private String id;  // "algebra", "mechanics"
+    private String id;
 
-    private String title;  // "Алгебра", "Механика"
-    private String subjectId;  // Ссылка на Subject.id
-
-    @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
-    private List<Lesson> lessons;
+    private String title;
+    private String subjectId;
 }
